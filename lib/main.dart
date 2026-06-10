@@ -7,115 +7,226 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Bachata Music Venues',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const BachataVenuesPage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class Venue {
+  final String name;
+  final String location;
+  final String description;
+  final bool isTexas;
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  Venue(this.name, this.location, this.description, {this.isTexas = true});
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class BachataVenuesPage extends StatelessWidget {
+  const BachataVenuesPage({super.key});
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  static const List<Venue> venues = [
+    // Texas Venues
+    Venue("Club Tropicana", "Houston, TX", "Popular spot known for vibrant bachata scenes with live DJs playing weekends."),
+    Venue("Metropolis", "Houston, TX", "Multi-level venue with dedicated bachata nights and themed dance events."),
+    Venue("El Big Bad", "Houston, TX", "Latin entertainment complex featuring nightly bachata music and dance competitions."),
+    Venue("Soleil Dallas", "Dallas, TX", "New venue with wood floors and two stages, playing salsa and bachata early in the night."),
+    Venue("Inside Avalon", "Dallas, TX", "Latin music venue featuring hiphop, reggeton, merengue, salsa, and bachata."),
+    Venue("Café Pacifico", "Austin, TX", "Cozy restaurant and bar with regular bachata nights and Latin poetry events."),
+    Venue("La Fogata", "San Antonio, TX", "Authentic Mexican restaurant with weekend bachata DJ sets and dance floor."),
+    Venue("Club 313", "Detroit, MI (seasonal Texas events)", "Hosts special bachata nights during Texas festivals and conferences."),
+    Venue("The Alley Bar", "Fort Worth, TX", "Underground bar with intimate bachata acoustic sets on Wednesdays."),
+    Venue("Rio Nightclub", "Plano, TX", "Latin-focused nightclub with themed bachata weekends and VIP sections."),
+    // Michigan Venues
+    Venue("The Annex", "Detroit, MI", "Upscale venue hosting dedicated bachata nights with professional DJs.", isTexas: false),
+    Venue("Club Bleu", "Detroit, MI", "Known for high-energy bachata and Latin nights with dance workshops.", isTexas: false),
+    Venue("Club 313", "Detroit, MI", "Popular spot for bachata dance competitions and social dancing.", isTexas: false),
+    Venue("The Norwood", "Detroit, MI", "Sleek underground lounge with exclusive bachata nights and craft cocktails.", isTexas: false),
+    Venue("The Eastern", "Detroit, MI", "The Norwood's sister venue, hosting the hottest bachata night in Michigan.", isTexas: false),
+    Venue("Bachata Nights at The Norwood", "Detroit, MI", "Weekly upscale Latin night experience with DJ Tony Toca and themed events.", isTexas: false),
+    Venue("Bachata Nights at The Eastern", "Detroit, MI", "Newer venue offering fresh bachata experiences with open-concept design.", isTexas: false),
+    Venue("Detroit Bachata Oasis", "Livonia, MI", "Community-focused venue specializing in bachata sensual and traditional workshops.", isTexas: false),
+    Venue("Latin Vibes Lounge", "Warren, MI", "Suburban favorite with regular bachata classes and social dance nights.", isTexas: false),
+    Venue("Casa de Musica", "Sterling Heights, MI", "Family-owned venue with live bands playing bachata and other Latin genres.", isTexas: false),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    final texasVenues = venues.where((v) => v.isTexas).toList();
+    final michiganVenues = venues.where((v) => !v.isTexas).toList();
+    
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text('🎸 Bachata Music Venues'),
+        subtitle: const Text('Texas & Michigan'),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF667eea),
+              Color(0xFF764ba2),
+              Color(0xFF667eea),
+            ],
+          ),
+        ),
+        child: ListView(
+          padding: const EdgeInsets.all(16.0),
           children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            const Card(
+              child: Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text(
+                  'Top 20 clubs and venues for bachata music in Texas & Michigan',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              '🇹🇽 Texas',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ...texasVenues.map((v) => VenueCard(venue: v)).toList(),
+            const SizedBox(height: 20),
+            const Text(
+              '🏫 Michigan',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            const SizedBox(height: 10),
+            ...michiganVenues.map((v) => VenueCard(venue: v)).toList(),
+            const SizedBox(height: 20),
+            const Card(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      '🎧 Bachata Mixtapes',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Best of Bachata 2025',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.youtube_browser, size: 50),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text('Classic Bachata Vibes', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.youtube_browser, size: 50),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text('Bachata Sensual Mix', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.youtube_browser, size: 50),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text('Romantic Bachata Collection', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Center(
+                        child: Icon(Icons.youtube_browser, size: 50),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              '🎸 Find your rhythm in the heart of bachata music • Texas & Michigan',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white70),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    );
+  }
+}
+
+class VenueCard extends StatelessWidget {
+  final Venue venue;
+
+  const VenueCard({super.key, required this.venue});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              venue.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.red,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              venue.location,
+              style: const TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              venue.description,
+              style: const TextStyle(height: 1.4),
+            ),
+          ],
+        ),
       ),
     );
   }
